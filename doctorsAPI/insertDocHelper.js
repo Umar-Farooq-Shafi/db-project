@@ -27,6 +27,7 @@ const insertIntoAllDoctors = (conn, type, data) => {
     id,
     depName,
   } = data;
+  console.log(data);
 
   conn.query({
     sql: "INSERT INTO `all_doctors`(`DOC_NO`, `DEPARTMENT`) VALUES (?, ?)",
@@ -37,7 +38,7 @@ const insertIntoAllDoctors = (conn, type, data) => {
       return conn.rollback(function () {
         throw error;
       });
-    }
+    } 
 
     if (type !== 1) {
       insertIntoDocOnCall(conn, data);

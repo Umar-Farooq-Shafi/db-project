@@ -266,15 +266,15 @@
                                 xHttp.open("POST", "http://localhost:3000/api/doctorRegistration", true);
                             } 
                             else if (status == "2") {
-                                console.log('object');
                                 if (localStorage.getItem('patientCall')) {
                                     id = localStorage.getItem('patientCall');
                                     localStorage.setItem('patientCall', parseInt(id) + 1);
-                                    id = parseInt(1) + 1;
+                                    id = parseInt(id) + 1;
                                 } else {
                                     localStorage.setItem('patientCall', '1');
                                 }
                                 id = 'DC' + id;
+                                console.log(id);
                                 xHttp.open("POST", "http://localhost:3000/api/doctorOnCall", true);
                             }
                             xHttp.setRequestHeader("Content-Type", "application/json");

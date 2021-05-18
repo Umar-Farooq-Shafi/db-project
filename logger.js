@@ -32,6 +32,6 @@ Localhost: ${chalk.magenta(`http://${host}:${port}`)}
 ${chalk.blue(`Press ${chalk.italic('CTRL-C')} to stop`)}
     `);
   },
-};
+}; 
 
 module.exports = logger;

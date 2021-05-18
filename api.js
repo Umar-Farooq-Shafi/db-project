@@ -13,23 +13,24 @@ app.get('/register', (req, res) => {
   pool.getConnection((err, connection) => {
     if (err) throw err;
     connection.query(`SELECT
-        d.DOC_NO,
-        d.D_NAME,
-        dep.D_NAME,
-        dep.D_LOCATION,
-        dep.FACILITIES,
-        d.QUALIFICATION,
-        d.SALARY,
-        d.ADDRESS,
-        d.PH_NO,
-        d.DOJ,
-        d.EN_TIME,
-        d.EX_TIME
-    FROM
-        doc_reg d,
-        department dep
-    WHERE
-        d.D_NAME = dep.D_NAME`, (e, result) => {
+    d.DOC_NO,
+    d.D_NAME as Doc,
+    dep.D_NAME,
+    dep.D_LOCATION,
+    dep.FACILITIES,
+    d.QUALIFICATION,
+    d.SALARY,
+    d.ADDRESS,
+    d.PH_NO,
+    d.DOJ,
+    d.EN_TIME,
+    d.EX_TIME
+FROM
+    doc_reg d,
+    all_doctors a,
+    department dep
+WHERE
+   a.DEPARTMENT  = dep.D_NAME && a.DOC_NO = d.DOC_NO`, (e, result) => {
       if (e) throw e;
 
       res.status(200).json(result);
@@ -50,7 +51,7 @@ app.get('/call', (req, res) => {
     connection.query(`
     SELECT
     d.DOC_NO,
-    d.D_NAME,
+    d.D_NAME as Doc,
     dep.D_NAME,
     dep.D_LOCATION,
     dep.FACILITIES,
@@ -61,9 +62,10 @@ app.get('/call', (req, res) => {
     d.PH_NO
 FROM
     doc_on_call d,
+    all_doctors a,
     department dep
 WHERE
-    d.D_NAME = dep.D_NAME
+    a.DEPARTMENT = dep.D_NAME && a.DOC_NO = d.DOC_NO
     `, (e, result) => {
       if (e) throw e;
 
