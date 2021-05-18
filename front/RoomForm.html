@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <title>Room Form</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+
+<body>
+
+    <div class="container container-fluid">
+        <h2 class="text-center text-muted">Room Entry Form</h2>
+
+        <form onsubmit="submitForm()">
+            <div class="form-group">
+                <label for="exampleFormControlSelect1">Room Type</label>
+                <select class="form-control" id="TYPE">
+                    <option value="G">General</option>
+                    <option value="P">Private</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="exampleFormControlSelect1">Status</label>
+                <select class="form-control" id="STATUS">
+                    <option value="Y">Yes</option>
+                    <option value="N">No</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="exampleInputEmail1">Room daily charges</label>
+                <input type="number" class="form-control" id="RM_DL_CRG" aria-describedby="emailHelp"
+                    placeholder="Daily charges">
+            </div>
+            <div class="form-group">
+                <label for="exampleInputPassword1">Other chargers</label>
+                <input type="number" class="form-control" id="OTHER_CRG" placeholder="Extras">
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+
+    </div>
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+
+    <script>
+        const param = new URLSearchParams(location.search);
+
+        if (param.get('id')) {
+            const xHttp = new XMLHttpRequest();
+            // Get the admit
+            xHttp.open("GET", `http://localhost:3000/api/room/single?id=${param.get('id')}`, true);
+
+            xHttp.onreadystatechange = function () {
+                if (this.readyState == 4 && this.status == 200) {
+                    const names = JSON.parse(this.responseText);
+                    document.querySelectorAll('input').forEach((v, k) => {
+                        v.value = names[0][v.id];
+                    });
+                    
+                    document.getElementById('TYPE').value = names[0]["TYPE"];
+                    document.getElementById('STATUS').value = names[0]["STATUS"];
+                }
+            };
+
+            xHttp.send();
+        }
+
+        const submitForm = () => {
+            event.preventDefault();
+
+            const TYPE = document.getElementById('TYPE').value;
+            const STATUS = document.getElementById('STATUS').value;
+            const RM_DL_CRG = document.getElementById('RM_DL_CRG').value;
+            const OTHER_CRG = document.getElementById('OTHER_CRG').value;
+
+            const xHttp = new XMLHttpRequest();
+
+            if (param.get('id')) {
+                xHttp.open("PUT", `http://localhost:3000/api/room/single?id=${param.get('id')}`, true);
+            }
+            else {
+                xHttp.open("POST", "http://localhost:3000/api/room/", true);
+            }
+            xHttp.setRequestHeader("Content-Type", "application/json");
+            xHttp.onreadystatechange = function () {
+                if (this.readyState == 4 && this.status == 200 || (this.readyState == 4 && this.status == 201)) {
+                    window.location.replace("http://127.0.0.1:5500/front/PatientView.html");
+                }
+            };
+
+            const data = {
+                TYPE, STATUS, RM_DL_CRG, OTHER_CRG
+            };
+
+            xHttp.send(JSON.stringify(data));
+        }
+    </script>
+</body>
+
+</html>

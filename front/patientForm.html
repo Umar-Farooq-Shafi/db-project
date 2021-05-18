@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css" />
+
+    <link rel="stylesheet" href="style.css" />
+    <title>Patient Record</title>
+</head>
+
+<body>
+    <div class="container-fluid">
+        <form class="needs-validation">
+            <h2>Patient Entry Form</h2>
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label for="PAT_NAME">Name</label>
+                    <input type="text" class="form-control" id="PAT_NAME" placeholder="Name" autocomplete="off" />
+                </div>
+            </div>
+            <div class="form-group col-md-12">
+                <label for="ADDRESS">Address</label>
+                <input type="text" class="form-control" id="ADDRESS" placeholder="1234 Main St" />
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label for="phoneNumber">Phone Number</label>
+                    <input type="number" class="form-control" id="PH_NO" name="phoneNumber" />
+                </div>
+                <div class="form-group col-md-4">
+                    <label for="city">City</label>
+                    <select id="CITY" class="form-control">
+                        <option selected value="">Select Your City</option>
+                        <option value="Lahore">Lahore</option>
+                        <option value="Karachi">Karachi</option>
+                        <option value="Islamabad">Islamabad</option>
+                        <option value="Peshawar">Peshawar</option>
+                        <option value="Multan">Multan</option>
+                        <option value="Gujranwala">Gujranwala</option>
+                    </select>
+                </div>
+                <div class="form-group col-md-2">
+                    <label for="PT_AGE">Age</label>
+                    <input type="number" class="form-control" id="PT_AGE" name="PT_AGE" />
+                </div>
+            </div>
+            <div class="col col-md-12" style="display: flex;">
+                <label for="">Sex</label>
+                <div class="form-check">
+                    &nbsp;<input class="form-check-input" type="radio" name="gender" id="male" value="M" checked />
+                    &nbsp;<label class="form-check-label p-3" for="male"> Male </label>
+                </div>
+                <div class="form-check">
+                    &nbsp;<input class="form-check-input" type="radio" name="gender" id="female" />
+                    &nbsp;<label class="form-check-label" for="female"> Female </label>
+                </div>
+                <br />
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label for="RFD">Referred Doctor</label>
+                    <input type="text" class="form-control" id="RFD" name="referredDoctor"
+                        placeholder="Referred Doctor" />
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="DEPARTMENT">Department Name</label>
+                    <input type="text" class="form-control" id="DEPARTMENT" name="DEPTNAME"
+                        placeholder="Department Name" />
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label for="CHKUP_DT">Checkup Date</label>
+                    <input type="date" class="form-control" id="CHKUP_DT" name="CHKUP_DT" />
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="treatment">treatment</label>
+                    <input type="text" class="form-control" id="TREATMENT" name="treatment" />
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="DIAGNOSIS">Diagnose</label>
+                    <input type="text" class="form-control" id="DIAGNOSIS" name="diagnose" />
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label for="patientStatus">Patient Status</label>
+                    <select id="STATUS" class="form-control" onchange="pattt();">
+                        <option value="1">Regular Patient</option>
+                        <option value="2">Patient Admit</option>
+                        <option value="3">Patient Discharge</option>
+                        <option value="4">Patient Operation</option>
+                    </select>
+                </div>
+
+            </div>
+            <div class="form-row" id="regular">
+                <div class="form-group col-md-4">
+                    <label for="visitDate">Visit Date</label>
+                    <input type="date" class="form-control" id="DATE_VIS" name="visitDate" />
+                </div>
+                <div class="form-group col-md-4">
+                    <label for="recMed">Recommeded Medicine</label>
+                    <input type="text" class="form-control" id="MEDICINES" name="recommendedMed" />
+
+                </div>
+                <div class="form-group col-md-4">
+                    <label for="treatmentStatus">Treatment Status</label>
+                    <input type="text" class="form-control" id="cond" name="treatmentStatus" />
+                </div>
+            </div>
+            <div id="discharge">
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label for="treatmentGiven">Treatment Given</label>
+                        <input type="text" class="form-control" id="TR_GVN" name="treatmentGiven" />
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="treatmentAdvice">Treatment Advice</label>
+                        <input type="text" class="form-control" id="TR_ADVS" name="treatGiven" />
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label for="paymentMode">Payment Mode</label>
+                        <select id="paymentMode" class="form-control">
+                            <option selected>Select payment Mode</option>
+                            <option>Cash</option>
+                            <option>Online</option>
+                        </select>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="paymentMade">Payment Made</label>
+                        <input type="text" class="form-control" id="PYMT_GV" name="paymentMade" />
+                    </div>
+                </div>
+            </div>
+            <div id="admit">
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label for="ADV_PYMT">Advance Payment</label>
+                        <input type="number" class="form-control" id="ADV_PYMT"/>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label for="ROOM_NO">Room no#</label>
+                        <input type="number" class="form-control" id="ROOM_NO" />
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-2">
+                        <label for="MODE_PYMT">Payment Mode</label>
+                        <select id="MODE_PYMT" class="form-control">
+                            <option selected>Mode</option>
+                            <option>Cash</option>
+                            <option>Online</option>
+                        </select>
+                    </div>
+                    <div class="form-group col-md-5">
+                        <label for="COND_ON">Initial Condition</label>
+                        <input type="text" class="form-control" id="COND_ON" name="COND_ON" />
+                    </div>
+                    <div class="form-group col-md-5">
+                        <label for="ATTDNT_NM">Attendant Name</label>
+                        <input type="text" class="form-control" id="ATTDNT_NM" name="ATTDNT_NM" />
+                    </div>
+                </div>
+            </div>
+            <div id="operation">
+                <div class="form-row">
+                    <div class="form-group col-md-4">
+                        <label for="ADMTD_ON">Admission Date</label>
+                        <input type="date" class="form-control" id="ADMTD_ON" name="ADMTD_ON" />
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label for="operationDate">Operation Date</label>
+                        <input type="date" class="form-control" id="DATE_OPR" name="operationDate" />
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label for="operationType">Operation Type</label>
+                        <input type="text" class="form-control" id="TY_OPERATION" name="operationType" />
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label for="PCAfterOpr">Patient Condition</label>
+                        <input type="text" class="form-control" id="AFOP_COND" name="PCAfterOpr"
+                            placeholder="Patient Condition After Operation" />
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="PCBeforeOpr">Patient Condition</label>
+                        <input type="text" class="form-control" id="IN_COND" name="PCBeforeOpr"
+                            placeholder="Patient Condition Before Operation" />
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label for="theatreNum">Theatre Number</label>
+                        <input type="text" class="form-control" id="OPTH_NO" name="theatreNum" />
+                    </div>
+                </div>
+            </div>
+            <div class="form-row" style="padding-left: 1.5%">
+                <button type="submit" class="btn btn-success form-group col-md-1" name="submit">
+                    Submit
+                </button>
+            </div>
+        </form>
+    </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+
+    <script>
+        function pattt() {
+            var regular = document.getElementById("regular");
+            var discharge = document.getElementById("discharge");
+            var admit = document.getElementById("admit");
+            var operation = document.getElementById("operation");
+            var status = document.getElementById("STATUS").value;
+            if (status == "1") {
+                regular.style.display = "block";
+                admit.style.display = "none";
+                operation.style.display = "none";
+                discharge.style.display = "none";
+            } else if (status == "2") {
+                regular.style.display = "none";
+                admit.style.display = "block";
+                operation.style.display = "none";
+                discharge.style.display = "none";
+            } else if (status == "3") {
+                regular.style.display = "none";
+                admit.style.display = "none";
+                operation.style.display = "none";
+                discharge.style.display = "block";
+            } else if (status == "4") {
+                regular.style.display = "none";
+                operation.style.display = "block";
+                admit.style.display = "none";
+                discharge.style.display = "none";
+            }
+        }
+
+        // Example starter JavaScript for disabling form submissions if there are invalid fields
+        (function () {
+            'use strict'
+
+            // Fetch all the forms we want to apply custom Bootstrap validation styles to
+            var forms = document.querySelectorAll('.needs-validation');
+
+            const param = new URLSearchParams(location.search);
+
+            if (param.get('id')) {
+                document.getElementById("STATUS").value = param.get('type');
+                document.getElementById("STATUS").setAttribute('disabled', true);
+                pattt();
+
+                const xHttp = new XMLHttpRequest();
+                if (param.get('type') == 1) {
+                    xHttp.open("GET", `http://localhost:3000/api/patient/getRegular?id=${param.get('id')}`, true);
+                }
+                // Get the admit
+                else if (param.get('type') == 2) {
+                    xHttp.open("GET", `http://localhost:3000/api/patient/getAdmit?id=${param.get('id')}`, true);
+                } else if (param.get('type') == 3) {
+                    xHttp.open("GET", `http://localhost:3000/api/patient/getDischarge?id=${param.get('id')}`, true);
+                } else if (param.get('type') == 4) {
+                    xHttp.open("GET", `http://localhost:3000/api/patient/getOperation?id=${param.get('id')}`, true);
+                }
+                xHttp.onreadystatechange = function () {
+                    if (this.readyState == 4 && this.status == 200) {
+                        const names = JSON.parse(this.responseText);
+                        document.querySelectorAll('input').forEach((v, k) => {
+                            v.value = names[0][v.id];
+                        });
+                        document.querySelectorAll('select').forEach((val) => {
+                            if (val.id !== 'paymentMode') val.value = names[0][val.id];
+                        });
+                    }
+                };
+
+                xHttp.send();
+            }
+
+            // Loop over them and prevent submission
+            Array.prototype.slice.call(forms)
+                .forEach(function (form) {
+                    form.addEventListener('submit', async (event) => {
+                        event.preventDefault()
+                        event.stopPropagation()
+
+                        form.classList.add('was-validated');
+
+                        const getSex = () => {
+                            var ele = document.getElementsByName('gender');
+
+                            var i;
+                            for (i = 0; i < ele.length; i++) {
+                                if (ele[i].checked)
+                                    return ele[i].value;
+                            }
+                        }
+
+                        var data = {};
+                        document.querySelectorAll('input').forEach((val) => {
+                            if (val.id !== 'male' && val.id !== 'female')
+                                data[val.id] = val.value;
+                        });
+                        document.querySelectorAll('select').forEach((val) => {
+                            if (val.id !== 'paymentMode') data[val.id] = val.value;
+                        });
+                        data["SEX"] = getSex();
+
+                        if (form.checkValidity()) {
+                            event.preventDefault();
+
+                            const xHttp = new XMLHttpRequest();
+                            // Update the pat_reg
+                            if (param.get('id') && param.get('type') == 1) {
+                                xHttp.open("PUT", `http://localhost:3000/api/patient/updateRegular?id=${param.get('id')}`, true);
+                            }
+                            // Update the admit
+                            else if (param.get('id') && param.get('type') == 2) {
+                                xHttp.open("PUT", `http://localhost:3000/api/patient/updateAdmit?id=${param.get('id')}`, true);
+                            } else if (param.get('id') && param.get('type') == 3) {
+                                xHttp.open("PUT", `http://localhost:3000/api/patient/updateDischarge?id=${param.get('id')}`, true);
+                            } else if (param.get('id') && param.get('type') == 4) {
+                                xHttp.open("PUT", `http://localhost:3000/api/patient/updateOperation?id=${param.get('id')}`, true);
+                            }
+                            // Add into Regular patient table
+                            else if (data["STATUS"] == 1) {
+                                xHttp.open("POST", `http://localhost:3000/api/patient/regular`, true);
+                            }
+                            // Add into Patient admit
+                            else if (data["STATUS"] == 2) {
+                                xHttp.open("POST", `http://localhost:3000/api/patient/admit`, true);
+                            }
+                            // Patient Discharge
+                            else if (data["STATUS"] == 3) {
+                                xHttp.open("POST", `http://localhost:3000/api/patient/discharge`, true);
+                            }
+                            // Patient operation
+                            else {
+                                xHttp.open("POST", "http://localhost:3000/api/patient/operation", true);
+                            }
+                            xHttp.setRequestHeader("Content-Type", "application/json");
+                            xHttp.onreadystatechange = function () {
+                                if (this.readyState == 4 && this.status == 200 || (this.readyState == 4 && this.status == 201)) {
+                                    window.location.replace("http://127.0.0.1:5500/front/PatientView.html");
+                                }
+                            };
+
+                            xHttp.send(JSON.stringify(data));
+                        }
+
+                    }, false);
+                });
+        })();
+    </script>
+
+</body>
+
+</html>

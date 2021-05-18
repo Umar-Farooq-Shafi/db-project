@@ -1,0 +1,15 @@
+.container-fluid
+{
+  padding: 10px 12% 5% 12%;
+  
+}
+#admit, #operation, #discharge
+{
+  display: none;
+}
+h2
+{
+  text-align: center;
+  color: black;
+  padding-bottom: 1%;
+}

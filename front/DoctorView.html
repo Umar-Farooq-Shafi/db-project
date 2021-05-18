@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <title>Doctor Table</title>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+    integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+
+<body>
+  <nav class="navbar navbar-default">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="./PatientView.html">Patient Table</a>
+      <a class="navbar-brand" href="./RoomView.html">Room Table</a>
+    </div>
+  </nav>
+  <div class="col-md-3"></div>
+  <div class="col-md-6 well">
+    <hr style="border-top:1px dotted #ccc;" />
+    <div class="form-group col-md-6">
+      <label for="patientStatus">Doctor type</label>
+      <select id="STATUS" class="form-control" onchange="pattt();">
+        <option value="1">Doctor Registration</option>
+        <option value="2">Doctor on call</option>
+      </select>
+    </div>
+    <div class="col-md-8">
+      <table class="table table-bordered" style="width: 90vw;">
+        <thead class="alert-info">
+        </thead>
+        <tbody id="result"></tbody>
+      </table>
+      <a href="./doctorForm.html" class="btn btn-primary">Add new doctor</a>
+    </div>
+  </div>
+
+  <!-- Optional JavaScript -->
+  <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+    integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+    crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+    integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+    crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+    integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+    crossorigin="anonymous"></script>
+
+  <script>
+    var el = document.getElementById('result');
+    var names = [];
+
+    function pattt() {
+      var status = document.getElementById("STATUS").value;
+      if (status == "1") {
+        Create("register");
+      } else if (status == "2") {
+        Create("call");
+      }
+    }
+
+    function Create(slug) {
+      const xHttp = new XMLHttpRequest();
+      xHttp.open("GET", `http://localhost:3000/api/${slug}`, true);
+      xHttp.onreadystatechange = function () {
+        if (this.readyState == 4 && this.status == 200) {
+          names = JSON.parse(this.responseText);
+          displayData();
+        }
+      };
+
+      xHttp.send();
+    };
+
+    function Delete(item) {
+      const xHttp = new XMLHttpRequest();
+      xHttp.open("DELETE", `http://localhost:3000/api/deleteDoctor?id=${names[item].DOC_NO}`, true);
+      xHttp.onreadystatechange = function () {
+        if (this.readyState == 4 && this.status == 200) {
+          console.log(this.responseText);
+          Create("register");
+        }
+      };
+
+      xHttp.send();
+    };
+
+    function Edit(item) {
+      const status = document.getElementById("STATUS").value;
+      document.location = `http://127.0.0.1:5500/front/doctorForm.html?id=${names[item].DOC_NO}&type=${status}`;
+    };
+
+
+    function displayData() {
+      var data = '';
+      if (names.length > 0) {
+        data += '<tr>';
+        Object.entries(names[0]).map(([key, val]) => {
+          data += `<th>${key}</th>`;
+        });
+        data += '<th>Action</th>';
+        data += '</tr>';
+        for (i = 0; i < names.length; i++) {
+          data += '<tr>';
+          Object.entries(names[i]).map(([key, val]) => {
+            data += '<td>' + val + '</td>';
+          });
+          data += `<td colspan="2">
+              <center  style="display: flex;">
+                <button class="btn btn-warning" onclick="Edit(${i})">
+                  <span class="glyphicon glyphicon-edit p-2">Edit</span> 
+                </button> | 
+                <button class="btn btn-danger" onclick="Delete(${i})">
+                  <span class="glyphicon glyphicon-trash"></span> Delete
+                </button>
+              </center>
+              </td>`;
+          data += '</tr>';
+        }
+      }
+
+      el.innerHTML = data;
+    };
+    Create("register");
+  </script>
+</body>
+
+</html>
